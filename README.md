@@ -52,7 +52,7 @@ Ensure you have the following installed:
 **注意**：必须使用 `--recursive` 参数以获取子模块。
 
 ```bash
-git clone --recursive [https://github.com/Altinus/Alt-Denoiser.git](https://github.com/Altinus/Alt-Denoiser.git)
+git clone --recursive https://github.com/Altinus/Alt-Denoiser.git
 cd Alt-Denoiser
 ```
 
