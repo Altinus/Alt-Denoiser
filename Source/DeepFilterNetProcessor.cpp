@@ -17,7 +17,6 @@ DeepFilterNetProcessor::~DeepFilterNetProcessor() {
 
 bool DeepFilterNetProcessor::initialize()
 {
-    // JUCE BinaryData 的类型是 const char* 和 int
     const char* modelData = AltDenoiserBinaryData::DeepFilterNet3_onnx_tar_gz;
     const int modelSize   = AltDenoiserBinaryData::DeepFilterNet3_onnx_tar_gzSize;
 
@@ -37,14 +36,11 @@ bool DeepFilterNetProcessor::initialize()
             DBG("Failed to open temp file for model");
             return false;
         }
-        stream.write(modelData, modelSize);  // char* 可以直接写
+        stream.write(modelData, modelSize);
         stream.flush();
     }
 
     state = df_create(tempModel.getFullPathName().toRawUTF8(), 100.0f, nullptr);
-
-    // tempModel.deleteFile();  // 可选，调试时先别删
-
     return state != nullptr;
 }
 
