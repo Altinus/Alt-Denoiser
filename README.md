@@ -25,11 +25,11 @@
 
 ## Download / 下载
 
-Please visit the **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** page to download the latest version.
-*Note: Currently, pre-compiled VST3 binaries are available for Windows only.*
+visit the **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** page to download the latest version.
+*Note: Currently, pre-compiled binaries are available for Windows only*
 
 前往 **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** 页面下载最新版本。
-*注意：目前仅提供 Windows 版本的 VST3 预编译文件。*
+*注意：目前仅提供 Windows 版本的预编译文件*
 
 ---
 
@@ -48,23 +48,16 @@ Ensure you have the following installed:
 
 ### 1. Clone Repository / 获取代码
 
-**Note**: You must use the `--recursive` flag to initialize submodules.
-**注意**：必须使用 `--recursive` 参数以获取子模块。
 
 ```bash
 git clone --recursive https://github.com/Altinus/Alt-Denoiser.git
 cd Alt-Denoiser
 ```
 
-*(If you forgot the recursive flag, run: `git submodule update --init --recursive`)*
-
 ### 2. Build / 开始构建
 
-CMake will handle dependencies and model downloads automatically.
-无需手动下载模型文件，CMake 会自动处理。
 
 ```bash
-# Configure (Release mode)
 cmake -B build -DCMAKE_BUILD_TYPE=Release
 
 # Build (Rust compilation may take time on first run)
@@ -77,7 +70,7 @@ After the build, the plugin files will be located at:
 编译完成后，你可以在以下目录找到插件文件：
 
 * **Windows / macOS / Linux**: 
-  `build/Alt Denoiser_artefacts/Release/`
+  `build/AltDenoiser_artefacts/Release/`
 
 ---
 
