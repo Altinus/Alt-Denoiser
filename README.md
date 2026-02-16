@@ -99,4 +99,5 @@ This project is licensed under the **GPLv3** License.
 
 * **[DeepFilterNet](https://github.com/Rikorose/DeepFilterNet)**: noise reduction AI models and Rust library.
 * **[JUCE](https://github.com/juce-framework/JUCE)**: Cross-platform audio plugin framework.
-* **[Resampler](https://github.com/niswegmann/Resampler)**: High-quality sample rate conversion library.
+* **[Resampler](https://github.com/niswegmann/Resampler)**: High-quality sample rate conversion library.  
+* **gemini**: For patiently explaining why my code wouldn't compile xd😂😂
