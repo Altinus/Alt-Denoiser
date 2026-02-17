@@ -82,7 +82,7 @@ Copy the generated plugin files (`.vst3` / `.component`) to your system's plugin
 | Format | Windows | macOS | Linux |
 | :--- | :--- | :--- | :--- |
 | **VST3** | `C:\Program Files\Common Files\VST3` | `/Library/Audio/Plug-Ins/VST3` | `~/.vst3` |
-| **VST2** | `C:\Program Files\Common Files\VST2` | `/Library/Audio/Plug-Ins/VST` | `~/.vst` |
+| **VST2** | `C:\Program Files\Steinberg\VstPlugins` (or `C:\Program Files\VSTPlugIns`) | `/Library/Audio/Plug-Ins/VST` | `~/.vst` |
 | **AU** | N/A | `/Library/Audio/Plug-Ins/Components` | N/A |
 | **LV2** | N/A | N/A | `~/.lv2` |
 
