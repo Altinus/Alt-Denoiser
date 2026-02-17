@@ -7,3 +7,6 @@
 [submodule "modules/Resampler"]
 	path = modules/Resampler
 	url = https://github.com/niswegmann/Resampler
+[submodule "modules/plugin_sdk"]
+	path = modules/plugin_sdk
+	url = https://github.com/TurnipHat/plugin_sdk.git
