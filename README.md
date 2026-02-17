@@ -1,12 +1,12 @@
 # Alt Denoiser
 
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)
-![Format](https://img.shields.io/badge/Format-VST3%20%7C%20AU%20%7C%20Standalone-blue)
+![Format](https://img.shields.io/badge/Format-VST3%20%7C%20VST2%20%7C%20AU%20%7C%20Standalone-blue)
 ![License](https://img.shields.io/badge/License-GPLv3-red)
 
 **Alt Denoiser** is a real-time AI audio noise suppression plugin based on **[DeepFilterNet](https://github.com/Rikorose/DeepFilterNet)**. It wraps the open-source DeepFilterNet model into a ready-to-use audio plugin, supporting Windows, macOS, and Linux platforms in VST3, Standalone, AU, and LV2 formats.
 
-**Alt Denoiser** 是一个基于 **[DeepFilterNet](https://github.com/Rikorose/DeepFilterNet)** 的实时 AI 语音降噪插件。它将开源的实时语音增强模型打包成一个开箱即用的音频插件，支持 Windows、macOS、Linux 平台，以及 VST3、Standalone、AU (macOS)、LV2 (Linux) 多种格式。
+**Alt Denoiser** 是一个基于 **[DeepFilterNet](https://github.com/Rikorose/DeepFilterNet)** 的实时 AI 语音降噪插件。它将开源的实时语音增强模型打包成一个开箱即用的音频插件，支持 Windows、macOS、Linux 平台，以及 VST3、VST2、Standalone、AU (macOS)、LV2 (Linux) 多种格式。
 
 ---
 
@@ -82,6 +82,7 @@ Copy the generated plugin files (`.vst3` / `.component`) to your system's plugin
 | Format | Windows | macOS | Linux |
 | :--- | :--- | :--- | :--- |
 | **VST3** | `C:\Program Files\Common Files\VST3` | `/Library/Audio/Plug-Ins/VST3` | `~/.vst3` |
+| **VST2** | `C:\Program Files\Common Files\VST2` | `/Library/Audio/Plug-Ins/VST` | `~/.vst` |
 | **AU** | N/A | `/Library/Audio/Plug-Ins/Components` | N/A |
 | **LV2** | N/A | N/A | `~/.lv2` |
 
