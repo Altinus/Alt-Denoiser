@@ -67,8 +67,25 @@ public:
     const juce::String getProgramName(int) override { return "Default"; }
     void changeProgramName(int, const juce::String&) override {}
 
-    void getStateInformation(juce::MemoryBlock& destData) override {}
-    void setStateInformation(const void* data, int sizeInBytes) override {}
+    void AltDenoiserProcessor::getStateInformation(juce::MemoryBlock& destData)
+    {
+        auto state = apvts.copyState();
+        std::unique_ptr<juce::XmlElement> xml(state.createXml());
+        copyXmlToBinary(*xml, destData);
+    }
+
+    void AltDenoiserProcessor::setStateInformation(const void* data, int sizeInBytes)
+    {
+        std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+
+        if (xmlState.get() != nullptr)
+        {
+            if (xmlState->hasTagName(apvts.state.getType()))
+            {
+                apvts.replaceState(juce::ValueTree::fromXml(*xmlState));
+            }
+        }
+    }
 
     std::atomic<float> inputRmsLevel { 0.0f };
     std::atomic<float> outputRmsLevel { 0.0f };

@@ -105,7 +105,10 @@ juce_add_plugin(AltDenoiserPlugin
 )
 
 target_compile_definitions(AltDenoiserPlugin PUBLIC
+    JUCE_WEB_BROWSER=0
+    JUCE_USE_CURL=0
     JUCE_VST3_CAN_REPLACE_VST2=0
+    JucePlugin_LV2URI="https://github.com/Altinus/Alt-Denoiser"
 )
 
 # /bigogj for MSVC to avoid "fatal error C1128: number of sections exceeded object file format limit: compile with /bigobj"
