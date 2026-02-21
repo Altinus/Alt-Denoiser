@@ -40,7 +40,7 @@ public:
         l->setColour(juce::Label::outlineColourId, juce::Colours::transparentBlack);
         l->setColour(juce::Label::backgroundColourId, juce::Colours::transparentBlack);
         l->setColour(juce::Label::textColourId, juce::Colours::lightgrey);
-        l->setFont(14.0f);
+        l->setFont(juce::FontOptions(14.0f));
         return l;
     }
 };
@@ -148,21 +148,21 @@ public:
         float barCenterX = barRect.getCentreX();
         // top:dB
         g.setColour(juce::Colours::white);
-        g.setFont(12.0f);
+        g.setFont(juce::FontOptions(12.0f));
         juce::String peakStr = (displayedDb <= -90.0f) ? "-inf" : juce::String(displayedDb, 1);
         juce::Rectangle<float> topTextRect(0, 0, 60, topTextHeight);
         topTextRect.setCentre(barCenterX, topTextHeight / 2.0f);
         g.drawFittedText(peakStr, topTextRect.toNearestInt(), juce::Justification::centred, 1);
 
         // bottom:IN/OUT
-        g.setFont(10.0f);
+        g.setFont(juce::FontOptions(10.0f));
         g.setColour(juce::Colours::grey);
         juce::Rectangle<float> botTextRect(0, bounds.getBottom() - bottomTextHeight, 60, bottomTextHeight);
         botTextRect.setCentre(barCenterX, bounds.getBottom() - bottomTextHeight / 2.0f);
         g.drawFittedText(isInput ? "IN" : "OUT", botTextRect.toNearestInt(), juce::Justification::centred, 1);
 
         // meter ticks
-        g.setFont(10.0f);
+        g.setFont(juce::FontOptions(10.0f));
         const float ticks[] = { 0.0f, -6.0f, -12.0f, -24.0f, -48.0f };
         for (float t : ticks) {
             float y = mapDbToY(t);

@@ -13,7 +13,7 @@ AltDenoiserEditor::AltDenoiserEditor(AltDenoiserProcessor& p, juce::AudioProcess
 
     attenLabel.setText("Reduction", juce::dontSendNotification);
     attenLabel.setJustificationType(juce::Justification::centred);
-    attenLabel.setFont(juce::Font(13.0f, juce::Font::bold));
+    attenLabel.setFont(juce::Font(juce::FontOptions(13.0f).withStyle("bold")));
     attenLabel.setColour(juce::Label::textColourId, juce::Colours::grey);
     addAndMakeVisible(attenLabel);
 
@@ -54,7 +54,7 @@ void AltDenoiserEditor::paint(juce::Graphics& g)
 {
     g.fillAll(juce::Colour(0xff1e1e1e));
     g.setColour(juce::Colour(0xffdddddd)); 
-    g.setFont(22.0f);
+    g.setFont(juce::Font(juce::FontOptions(25.0f).withStyle("bold")));
     g.drawFittedText("Alt Denoiser", getLocalBounds().removeFromTop(40), juce::Justification::centred, 1);
 }
 

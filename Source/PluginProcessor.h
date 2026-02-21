@@ -67,14 +67,14 @@ public:
     const juce::String getProgramName(int) override { return "Default"; }
     void changeProgramName(int, const juce::String&) override {}
 
-    void AltDenoiserProcessor::getStateInformation(juce::MemoryBlock& destData)
+    void getStateInformation(juce::MemoryBlock& destData) override
     {
         auto state = apvts.copyState();
         std::unique_ptr<juce::XmlElement> xml(state.createXml());
         copyXmlToBinary(*xml, destData);
     }
 
-    void AltDenoiserProcessor::setStateInformation(const void* data, int sizeInBytes)
+    void setStateInformation(const void* data, int sizeInBytes) override
     {
         std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
 
