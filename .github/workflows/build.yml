@@ -17,10 +17,13 @@ jobs:
         include:
           - os: windows-latest
             name: windows
-          #- os: macos-latest
-          #  name: macos
-          #- os: ubuntu-latest
-          #  name: linux
+            path: build/AltDenoiserPlugin_artefacts/Release/
+          - os: macos-latest
+            name: macos
+            path: build/AltDenoiserPlugin_artefacts/Release/
+          - os: ubuntu-latest
+            name: linux
+            path: build/AltDenoiserPlugin_artefacts/Release/
 
     runs-on: ${{ matrix.os }}
 
@@ -56,23 +59,11 @@ jobs:
       - name: Build
         run: cmake --build build --config Release --parallel 4
 
-      - name: Package artifacts (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          Compress-Archive -Path "build\AltDenoiserPlugin_artefacts\Release\*" -DestinationPath "Alt-Denoiser-${{ matrix.name }}.zip"
-
-      - name: Package artifacts (macOS / Linux)
-        if: runner.os != 'Windows'
-        run: |
-          cd build/AltDenoiserPlugin_artefacts/Release
-          zip -r ${{ github.workspace }}/Alt-Denoiser-${{ matrix.name }}.zip .
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: Alt-Denoiser-${{ matrix.name }}
-          path: Alt-Denoiser-${{ matrix.name }}.zip
+          path: ${{ matrix.path }}
 
   release:
     needs: build
@@ -84,11 +75,17 @@ jobs:
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Archive artifacts for Release
+        run: |
+          cd artifacts
+          for dir in */; do
+            zip -r "${dir%/}.zip" "$dir"
+          done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            Alt-Denoiser-windows/Alt-Denoiser-windows.zip
-            Alt-Denoiser-macos/Alt-Denoiser-macos.zip
-            Alt-Denoiser-linux/Alt-Denoiser-linux.zip
+          files: artifacts/*.zip
