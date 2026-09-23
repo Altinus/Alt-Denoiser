@@ -27,7 +27,7 @@ AltDenoiserEditor::AltDenoiserEditor(AltDenoiserProcessor& p, juce::AudioProcess
     aboutButton.onClick = [this] { juce::AlertWindow::showMessageBoxAsync(
             juce::AlertWindow::InfoIcon,
             "About",
-            "Alt Denoiser v1.0\n"
+            "Alt Denoiser v1.0.2\n"
             "By Altinus\n\n"
             "Credits:\n"
             "DeepFilterNet (Rikorose)\n"

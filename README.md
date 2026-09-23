@@ -25,11 +25,9 @@
 
 ## Download / 下载
 
-visit the **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** page to download the latest version.
-*Note: Currently, pre-compiled binaries are available for Windows only*
+Visit the **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** page to download the latest version for Windows, macOS, and Linux.
 
-前往 **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** 页面下载最新版本。
-*注意：目前仅提供 Windows 版本的预编译文件*
+前往 **[Releases](https://github.com/Altinus/Alt-Denoiser/releases)** 页面下载适用于 Windows、macOS 和 Linux 的最新预编译版本。
 
 ---
 

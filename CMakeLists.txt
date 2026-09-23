@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(AltDenoiser VERSION 1.0.0 LANGUAGES C CXX)
+project(AltDenoiser VERSION 1.0.2 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -126,7 +126,7 @@ endif()
 juce_add_plugin(AltDenoiserPlugin
     PRODUCT_NAME        "Alt Denoiser"
     COMPANY_NAME        "Altinus"
-    VERSION             1.0.0
+    VERSION             1.0.2
     PLUGIN_MANUFACTURER_CODE "AltA" 
     PLUGIN_CODE              "AltD"
     FORMATS             ${PLUGIN_FORMATS}
