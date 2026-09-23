@@ -29,6 +29,8 @@ bool DeepFilterNetProcessor::initialize()
     auto tempDir = juce::File::getSpecialLocation(juce::File::tempDirectory);
     auto tempModel = tempDir.getChildFile("alt_denoiser_model.tar.gz");
 
+    // Avoid file locking issues when multiple instances run simultaneously
+    if (!tempModel.existsAsFile() || tempModel.getSize() != (juce::int64)modelSize)
     {
         juce::FileOutputStream stream(tempModel);
         if (!stream.openedOk()) 
@@ -36,6 +38,8 @@ bool DeepFilterNetProcessor::initialize()
             DBG("Failed to open temp file for model");
             return false;
         }
+        stream.setPosition(0);
+        stream.truncate();
         stream.write(modelData, modelSize);
         stream.flush();
     }

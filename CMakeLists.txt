@@ -70,6 +70,34 @@ else()
         dl
         m
     )
+
+    # Pre-check Linux dependencies for JUCE (prevent cryptic juceaide build failures)
+    find_package(PkgConfig QUIET)
+    if(PKG_CONFIG_FOUND)
+        pkg_check_modules(JUCE_SYS_DEPS QUIET alsa freetype2 fontconfig x11 xrandr xinerama xcursor)
+        if(NOT JUCE_SYS_DEPS_FOUND)
+            message(WARNING
+                "=================================================================\n"
+                "  [Alt-Denoiser] Required Linux GUI/Audio dependencies not found!\n"
+                "  Note: Even on Wayland desktop environments, JUCE requires X11\n"
+                "  client development headers (Xrandr, Xinerama, etc.) to build.\n"
+                "\n"
+                "  Please install the required development packages:\n"
+                "    Debian/Ubuntu/Ubuntu Studio:\n"
+                "      sudo apt-get install -y libasound2-dev libfreetype6-dev \\\n"
+                "        libgl1-mesa-dev libgtk-3-dev libx11-dev libxcomposite-dev \\\n"
+                "        libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev\n"
+                "    Fedora:\n"
+                "      sudo dnf install alsa-lib-devel freetype-devel fontconfig-devel \\\n"
+                "        mesa-libGL-devel gtk3-devel libX11-devel libXcomposite-devel \\\n"
+                "        libXcursor-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel\n"
+                "    Arch Linux:\n"
+                "      sudo pacman -S alsa-lib freetype2 fontconfig mesa gtk3 \\\n"
+                "        libx11 libxcomposite libxcursor libxext libxinerama libxrandr libxrender\n"
+                "================================================================="
+            )
+        endif()
+    endif()
 endif()
 
 # check if Juce submodule exists

@@ -9,20 +9,37 @@
 class SimpleFifo {
 public:
     void setSize(int size) { 
-        buffer.resize(size, 0.0f); 
+        buffer.assign(size, 0.0f); 
         writePos = 0; readPos = 0; samplesInFifo = 0; 
+    }
+
+    void clear() {
+        std::fill(buffer.begin(), buffer.end(), 0.0f);
+        writePos = 0; readPos = 0; samplesInFifo = 0;
     }
     
     void push(const float* data, int numSamples) {
+        if (buffer.empty() || numSamples <= 0) return;
         for (int i = 0; i < numSamples; ++i) {
             buffer[writePos] = data[i];
             writePos = (writePos + 1) % buffer.size();
         }
         samplesInFifo += numSamples;
-        if (samplesInFifo > buffer.size()) samplesInFifo = buffer.size();
+        if (samplesInFifo > (int)buffer.size()) samplesInFifo = (int)buffer.size();
+    }
+
+    void pushSilence(int numSamples) {
+        if (buffer.empty() || numSamples <= 0) return;
+        for (int i = 0; i < numSamples; ++i) {
+            buffer[writePos] = 0.0f;
+            writePos = (writePos + 1) % buffer.size();
+        }
+        samplesInFifo += numSamples;
+        if (samplesInFifo > (int)buffer.size()) samplesInFifo = (int)buffer.size();
     }
     
     void peek(float* dest, int numSamples) {
+        if (buffer.empty() || numSamples <= 0) return;
         int tempRead = readPos;
         for (int i = 0; i < numSamples; ++i) {
             dest[i] = buffer[tempRead];
@@ -31,8 +48,9 @@ public:
     }
     
     void discard(int numSamples) {
+        if (buffer.empty() || numSamples <= 0) return;
         readPos = (readPos + numSamples) % buffer.size();
-        samplesInFifo -= numSamples;
+        samplesInFifo = std::max(0, samplesInFifo - numSamples);
     }
     
     int getAvailable() const { return samplesInFifo; }
@@ -51,6 +69,8 @@ public:
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
+    void reset() override;
+    bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     juce::AudioProcessorEditor* createEditor() override;

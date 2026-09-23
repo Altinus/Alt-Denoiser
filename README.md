@@ -46,6 +46,26 @@ Ensure you have the following installed:
 * **Rust Toolchain**
 * **C++ Compiler** (Visual Studio 2022 / Xcode / GCC)
 
+#### Linux System Dependencies / Linux 系统依赖
+JUCE requires GUI and audio development libraries on Linux (even when running under **Wayland**, JUCE requires X11/XWayland client headers to compile and run):
+在 Linux 下编译 JUCE 插件必须安装图形与音频开发库（即使在 **Wayland** 桌面环境下，JUCE 仍依赖 X11/XWayland 客户端头文件进行构建）：
+
+* **Ubuntu / Debian / Ubuntu Studio**:
+  ```bash
+  sudo apt-get update
+  sudo apt-get install -y libasound2-dev libfreetype6-dev libgl1-mesa-dev libgtk-3-dev \
+    libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev
+  ```
+* **Fedora**:
+  ```bash
+  sudo dnf install alsa-lib-devel freetype-devel fontconfig-devel mesa-libGL-devel gtk3-devel \
+    libX11-devel libXcomposite-devel libXcursor-devel libXext-devel libXinerama-devel libXrandr-devel libXrender-devel
+  ```
+* **Arch Linux / Manjaro**:
+  ```bash
+  sudo pacman -S alsa-lib freetype2 fontconfig mesa gtk3 libx11 libxcomposite libxcursor libxext libxinerama libxrandr libxrender
+  ```
+
 ### 1. Clone Repository / 获取代码
 
 
