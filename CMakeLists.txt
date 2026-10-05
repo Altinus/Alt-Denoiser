@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
-project(AltDenoiser VERSION 1.0.2 LANGUAGES C CXX)
+
+# macOS deployment target: ensure binaries run on macOS 14.0+ (Issue #11)
+if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum OS X deployment version")
+endif()
+
+project(AltDenoiser VERSION 1.0.3 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -9,6 +15,11 @@ if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 else()
     add_compile_options(-fPIC)
+endif()
+
+# Linux linker options: prevent executable stack (PT_GNU_STACK RWE) (Issue #10)
+if(UNIX AND NOT APPLE)
+    add_link_options(-Wl,-z,noexecstack)
 endif()
 
 # path settings
@@ -28,8 +39,14 @@ else()
     set(RUST_LIB_NAME "libdf.a")
 endif()
 
+if(APPLE)
+    set(LIBDF_ENV ${CMAKE_COMMAND} -E env MACOSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET})
+else()
+    set(LIBDF_ENV "")
+endif()
+
 add_custom_target(build_libdf ALL
-    COMMAND ${CARGO_CMD} build --release --manifest-path ${LIBDF_CARGO_DIR}/Cargo.toml --features capi
+    COMMAND ${LIBDF_ENV} ${CARGO_CMD} build --release --manifest-path ${LIBDF_CARGO_DIR}/Cargo.toml --features capi
     WORKING_DIRECTORY ${LIBDF_CARGO_DIR}
     BYPRODUCTS ${TARGET_RELEASE_DIR}/${RUST_LIB_NAME}
     COMMENT "###### Building libDF with Cargo... ######"
@@ -126,7 +143,7 @@ endif()
 juce_add_plugin(AltDenoiserPlugin
     PRODUCT_NAME        "Alt Denoiser"
     COMPANY_NAME        "Altinus"
-    VERSION             1.0.2
+    VERSION             1.0.3
     PLUGIN_MANUFACTURER_CODE "AltA" 
     PLUGIN_CODE              "AltD"
     FORMATS             ${PLUGIN_FORMATS}
@@ -174,4 +191,7 @@ target_link_libraries(AltDenoiserPlugin PRIVATE
     juce::juce_gui_basics
     juce::juce_gui_extra
 )
+if(UNIX AND NOT APPLE)
+    target_link_options(AltDenoiserPlugin INTERFACE -Wl,-z,noexecstack)
+endif()
 add_dependencies(AltDenoiserPlugin build_libdf)
