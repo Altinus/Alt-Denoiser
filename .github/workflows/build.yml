@@ -56,10 +56,39 @@ jobs:
             libxrender-dev
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=14.0
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "14.0"
 
       - name: Build
         run: cmake --build build --config Release --parallel 4
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "14.0"
+
+      - name: Verify macOS deployment target
+        if: runner.os == 'macOS'
+        run: |
+          echo "=== Verifying macOS Mach-O deployment target ==="
+          find build/AltDenoiserPlugin_artefacts/Release/ \( -name "*.component" -o -name "*.vst3" -o -name "*.app" \) | while read -r item; do
+            binary=$(find "$item/Contents/MacOS" -type f 2>/dev/null | head -n 1)
+            if [ -n "$binary" ]; then
+              echo "Checking $binary:"
+              otool -l "$binary" | grep -A 4 LC_BUILD_VERSION || true
+            fi
+          done
+
+      - name: Verify non-executable stack on Linux
+        if: runner.os == 'Linux'
+        run: |
+          echo "=== Verifying Linux shared libraries GNU_STACK permissions ==="
+          find build/AltDenoiserPlugin_artefacts/Release/ -name "*.so" | while read -r so; do
+            echo "Checking $so:"
+            readelf -W -l "$so" | grep "GNU_STACK" || true
+            if readelf -W -l "$so" | grep "GNU_STACK" | grep -q "RWE"; then
+              echo "ERROR: Executable stack (RWE) detected in $so!"
+              exit 1
+            fi
+          done
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
